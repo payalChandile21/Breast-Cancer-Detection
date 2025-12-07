@@ -3,18 +3,14 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# MUST BE THE VERY FIRST STREAMLIT COMMAND
 st.set_page_config(page_title="Breast Cancer Data Warehouse", layout="wide")
 
-# ========================================
-# LOAD DATA — WORKS WITH YOUR EXACT CSV
-# ========================================
 @st.cache_data
 def load_data():
-    # Your file has header on first line, but sometimes has empty rows
+  
     df = pd.read_csv("Breastcancerdataset.csv")
     
-    # Force exact column names (prevents any parsing error)
+
     expected_columns = [
         'id', 'diagnosis', 'radius_mean', 'texture_mean', 'perimeter_mean', 'area_mean',
         'smoothness_mean', 'compactness_mean', 'concavity_mean', 'concave points_mean',
@@ -27,19 +23,17 @@ def load_data():
     ]
     
     df.columns = expected_columns
-    df = df.iloc[:, 1:]  # Remove 'id' column
+    df = df.iloc[:, 1:] 
     df['diagnosis'] = df['diagnosis'].astype(str).str.strip()
     
     return df
 
-# Load the data
+
 df = load_data()
 
-# ========================================
-# DASHBOARD STARTS HERE
-# ========================================
+
 st.title("Breast Cancer Data Warehouse Dashboard")
-st.markdown("**Student:** Elaine Kiruba R | **Cloud Platform:** Amazon Athena + S3 | **Dashboard:** Streamlit")
+st.markdown("**Student:** Payal Chandile | **Cloud Platform:** Amazon Athena + S3 | **Dashboard:** Streamlit")
 
 # KPIs
 col1, col2, col3, col4 = st.columns(4)
@@ -93,3 +87,4 @@ st.plotly_chart(fig_scatter, use_container_width=True)
 # Success message
 st.success("PROJECT 1 COMPLETED SUCCESSFULLY")
 st.caption("Cloud Data Warehouse implemented using Amazon Athena + S3 | All requirements (a-e) fulfilled | Deadline: 07 December 2025")
+
